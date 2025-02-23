@@ -1,24 +1,22 @@
-document.getElementById("myForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent default form submission
+// Handle form submission
+document.getElementById('myForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const data = {};
 
-    // Collect form data
-    const formData = {
-        male: document.getElementById("male").checked,
-        age: parseInt(document.getElementById("age").value),
-        education: parseInt(document.getElementById("education").value),
-        currentSmoker: document.getElementById("currentSmoker").checked,
-        cigsPerDay: parseInt(document.getElementById("cigsPerDay").value) || 0,
-        BPMeds: document.getElementById("BPMeds").checked,
-        prevalentStroke: document.getElementById("prevalentStroke").checked,
-        prevalentHyp: document.getElementById("prevalentHyp").checked,
-        diabetes: document.getElementById("diabetes").checked,
-        totChol: parseInt(document.getElementById("totChol").value),
-        sysBP: parseFloat(document.getElementById("sysBP").value),
-        diaBP: parseFloat(document.getElementById("diaBP").value),
-        BMI: parseFloat(document.getElementById("BMI").value),
-        heartRate: parseInt(document.getElementById("heartRate").value),
-        glucose: parseInt(document.getElementById("glucose").value)
-    };
+    // Gather and parse data
+    for (let [key, value] of formData.entries()) {
+      const input = this.elements[key];
+      if (input.type === 'checkbox') {
+        data[key] = input.checked;
+      } else if (input.type === 'number') {
+        data[key] = Number(value);
+      } else {
+        data[key] = value;
+      }
+    }
+
+    console.log('Form Data:', data);
 
     // Send data to backend
     fetch("http://127.0.0.1:5000/submit", { // Replace with your backend URL
@@ -26,17 +24,29 @@ document.getElementById("myForm").addEventListener("submit", function(event) {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(data)
     })
     .then(response => response.json())
-    .then(data => {
-        console.log("Success:", data);
+    .then(answer => {
+        console.log("Success:", answer);
 
+        //make the form dissapear
+        document.getElementById('form-container').style.display = "none";
         // Update or create response div
-        let responseDiv = document.getElementById("responseDiv");
-        responseDiv.innerHTML = `<p><strong>Server Response:</strong> ${data.message}</p>`;
+        let responseDiv = document.getElementById("container");
+        responseDiv.innerHTML = `${answer.data}`;
     })
     .catch(error => {
         console.error("Error:", error);
     });
 });
+
+  // Toggle "Cigarettes Per Day" based on "Current Smoker" checkbox
+  const smokerCheckbox = document.querySelector('[name="currentSmoker"]');
+  const cigsPerDayGroup = document.getElementById('cigsPerDayGroup');
+
+  function toggleCigsPerDay() {
+    cigsPerDayGroup.style.display = smokerCheckbox.checked ? 'block' : 'none';
+  }
+  toggleCigsPerDay();
+  smokerCheckbox.addEventListener('change', toggleCigsPerDay);

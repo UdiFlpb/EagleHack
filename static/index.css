@@ -1,28 +1,173 @@
-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #f4f4f4;
-    font-family: Arial, sans-serif;
-}
-.form-container {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-label, input, select {
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
-}
-button {
-    width: 100%;
-    padding: 10px;
-    background: blue;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+ /* ---------------------------
+       BASIC PAGE STYLING
+    ---------------------------- */
+    body {
+        background: #f9f9f9;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      #form-container {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 2rem;
+        max-width: 800px;
+        margin: 3rem auto;
+      }
+      .title {
+        font-size: 2rem;
+        font-weight: 700;
+        background: linear-gradient(to right, #ff6b6b, #ffa94d);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+      .subtitle {
+        text-align: center;
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 2rem;
+      }
+  
+      /* ---------------------------
+         SECTION HEADINGS
+      ---------------------------- */
+      .section-title {
+        display: flex;
+        align-items: center;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+      .section-title::before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-right: 0.5rem;
+      }
+      .personal-info .section-title {
+        color: #ff6b6b;
+      }
+      .personal-info .section-title::before {
+        background-color: #ff6b6b;
+      }
+      .lifestyle .section-title {
+        color: #ffa94d;
+      }
+      .lifestyle .section-title::before {
+        background-color: #ffa94d;
+      }
+      .medical-history .section-title {
+        color: #63e6be;
+      }
+      .medical-history .section-title::before {
+        background-color: #63e6be;
+      }
+      .health-metrics .section-title {
+        color: #b197fc;
+      }
+      .health-metrics .section-title::before {
+        background-color: #b197fc;
+      }
+  
+      /* ---------------------------
+         FORM LAYOUT
+      ---------------------------- */
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+      .checkbox-label {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        color: #555;
+      }
+      .checkbox-label input[type="checkbox"] {
+        margin-right: 0.5rem;
+      }
+  
+      label {
+        margin-bottom: 0.25rem;
+        font-weight: 500;
+        color: #555;
+      }
+      small {
+        color: #999;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+      }
+      input[type="number"],
+      input[type="text"],
+      select {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 0.5rem;
+        font-size: 1rem;
+        transition: border-color 0.2s ease-in-out;
+      }
+      input[type="number"]:focus,
+      input[type="text"]:focus,
+      select:focus {
+        border-color: #ff6b6b;
+        outline: none;
+      }
+  
+      /* ---------------------------
+         SUBMIT BUTTON
+      ---------------------------- */
+      button[type="submit"] {
+        display: block;
+        margin: 2rem auto 0;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        background: linear-gradient(to right, #ff6b6b, #ffa94d);
+        color: #fff;
+        font-weight: 600;
+        transition: background 0.3s ease-in-out;
+      }
+      button[type="submit"]:hover {
+        background: linear-gradient(to right, #ff6b6b, #ff7f50);
+      }
+
+
+      #container {
+        display: flex;              /* Use flexbox for centering */
+        justify-content: center;    /* Center horizontally */
+        align-items: center;        /* Center vertically */
+        height: 100vh;              /* Full viewport height */
+        background-color: #f0f0f0;  /* Light background color */
+    }
+    
+    /* Style the text */
+    .text {
+        font-size: 24px;             /* Set font size */
+        font-family: 'Arial', sans-serif; /* Set a clean font */
+        background-color: #4CAF50;   /* Green background */
+        color: white;                /* White text color */
+        padding: 20px;               /* Add padding inside the p */
+        border-radius: 10px;         /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* Add a shadow effect */
+    }
+  
+      /* ---------------------------
+         RESPONSIVE ADJUSTMENTS
+      ---------------------------- */
+      @media (max-width: 600px) {
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+      }
