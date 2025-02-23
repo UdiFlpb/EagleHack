@@ -1,67 +1,341 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health Form</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Personal Health Questionnaire</title>
+  <style>
+    /* ---------------------------
+       BASIC PAGE STYLING
+    ---------------------------- */
+    body {
+      background: #f9f9f9;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .form-container {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 2rem;
+      max-width: 800px;
+      margin: 3rem auto;
+    }
+    .title {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #ff6b6b, #ffa94d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 2rem;
+    }
 
+    /* ---------------------------
+       SECTION HEADINGS
+    ---------------------------- */
+    .section-title {
+      display: flex;
+      align-items: center;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .section-title::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+    }
+    .personal-info .section-title {
+      color: #ff6b6b;
+    }
+    .personal-info .section-title::before {
+      background-color: #ff6b6b;
+    }
+    .lifestyle .section-title {
+      color: #ffa94d;
+    }
+    .lifestyle .section-title::before {
+      background-color: #ffa94d;
+    }
+    .medical-history .section-title {
+      color: #63e6be;
+    }
+    .medical-history .section-title::before {
+      background-color: #63e6be;
+    }
+    .health-metrics .section-title {
+      color: #b197fc;
+    }
+    .health-metrics .section-title::before {
+      background-color: #b197fc;
+    }
+
+    /* ---------------------------
+       FORM LAYOUT
+    ---------------------------- */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+      color: #555;
+    }
+    .checkbox-label input[type="checkbox"] {
+      margin-right: 0.5rem;
+    }
+
+    label {
+      margin-bottom: 0.25rem;
+      font-weight: 500;
+      color: #555;
+    }
+    small {
+      color: #999;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+    }
+    input[type="number"],
+    input[type="text"],
+    select {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 0.5rem;
+      font-size: 1rem;
+      transition: border-color 0.2s ease-in-out;
+    }
+    input[type="number"]:focus,
+    input[type="text"]:focus,
+    select:focus {
+      border-color: #ff6b6b;
+      outline: none;
+    }
+
+    /* ---------------------------
+       SUBMIT BUTTON
+    ---------------------------- */
+    button[type="submit"] {
+      display: block;
+      margin: 2rem auto 0;
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      background: linear-gradient(to right, #ff6b6b, #ffa94d);
+      color: #fff;
+      font-weight: 600;
+      transition: background 0.3s ease-in-out;
+    }
+    button[type="submit"]:hover {
+      background: linear-gradient(to right, #ff6b6b, #ff7f50);
+    }
+
+    /* ---------------------------
+       RESPONSIVE ADJUSTMENTS
+    ---------------------------- */
+    @media (max-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="form-container">
+    <h1 class="title">Personal Health Questionnaire</h1>
+    <p class="subtitle">Please fill out this form accurately for the best assessment</p>
+
     <form id="myForm">
-        <label for="male">Male:</label>
-        <input type="checkbox" id="male" name="male">
-    
-        <label for="age">Age:</label>
-        <input type="number" id="age" name="age" required>
-    
-        <label for="education">Education Level:</label>
-        <input type="number" id="education" name="education" required>
-    
-        <label for="currentSmoker">Current Smoker:</label>
-        <input type="checkbox" id="currentSmoker" name="currentSmoker">
-    
-        <label for="cigsPerDay">Cigarettes Per Day:</label>
-        <input type="number" id="cigsPerDay" name="cigsPerDay">
-    
-        <label for="BPMeds">Blood Pressure Medications:</label>
-        <input type="checkbox" id="BPMeds" name="BPMeds">
-    
-        <label for="prevalentStroke">Prevalent Stroke:</label>
-        <input type="checkbox" id="prevalentStroke" name="prevalentStroke">
-    
-        <label for="prevalentHyp">Prevalent Hypertension:</label>
-        <input type="checkbox" id="prevalentHyp" name="prevalentHyp">
-    
-        <label for="diabetes">Diabetes:</label>
-        <input type="checkbox" id="diabetes" name="diabetes">
-    
-        <label for="totChol">Total Cholesterol:</label>
-        <input type="number" id="totChol" name="totChol" required>
-    
-        <label for="sysBP">Systolic Blood Pressure:</label>
-        <input type="number" id="sysBP" name="sysBP" required>
-    
-        <label for="diaBP">Diastolic Blood Pressure:</label>
-        <input type="number" id="diaBP" name="diaBP" required>
-    
-        <label for="BMI">BMI:</label>
-        <input type="number" id="BMI" name="BMI" step="0.1" required>
-    
-        <label for="heartRate">Heart Rate:</label>
-        <input type="number" id="heartRate" name="heartRate" required>
-    
-        <label for="glucose">Glucose:</label>
-        <input type="number" id="glucose" name="glucose" required>
-    
-        <button type="submit">Submit</button>
+      <!-- PERSONAL INFORMATION -->
+      <div class="section personal-info">
+        <h2 class="section-title">Personal Information</h2>
+        <div class="form-row">
+          <!-- Gender Dropdown -->
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <small>Select the gender you identify with.</small>
+            <select id="gender" name="gender" required>
+              <option value="">--Select--</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <!-- Age -->
+          <div class="form-group">
+            <label for="age">Age</label>
+            <small>Your current age in years.</small>
+            <input type="number" id="age" name="age" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <!-- Years of Education -->
+          <div class="form-group">
+            <label for="education">Years of Education</label>
+            <small>The total number of years you have spent in formal education.</small>
+            <input type="number" id="education" name="education" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIFESTYLE FACTORS -->
+      <div class="section lifestyle">
+        <h2 class="section-title">Lifestyle Factors</h2>
+        <div class="form-row">
+          <!-- Current Smoker -->
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="currentSmoker"> Current Smoker
+            </label>
+            <small>Check if you currently smoke cigarettes.</small>
+          </div>
+          <!-- Cigarettes Per Day -->
+          <div class="form-group" id="cigsPerDayGroup">
+            <label for="cigsPerDay">Cigarettes Per Day</label>
+            <small>The average number of cigarettes you smoke each day.</small>
+            <input type="number" id="cigsPerDay" name="cigsPerDay">
+          </div>
+        </div>
+      </div>
+
+      <!-- MEDICAL HISTORY -->
+      <div class="section medical-history">
+        <h2 class="section-title">Medical History</h2>
+        <div class="form-row">
+          <!-- Blood Pressure Medication -->
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="BPMeds"> Blood Pressure Medication
+            </label>
+            <small>Check if you take medication to control your blood pressure.</small>
+          </div>
+          <!-- Prevalent Stroke -->
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="prevalentStroke"> Prevalent Stroke
+            </label>
+            <small>Check if you have ever had a stroke.</small>
+          </div>
+          <!-- Prevalent Hypertension -->
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="prevalentHyp"> Prevalent Hypertension
+            </label>
+            <small>Check if you have been diagnosed with high blood pressure.</small>
+          </div>
+          <!-- Diabetes -->
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" name="diabetes"> Diabetes
+            </label>
+            <small>Check if you have been diagnosed with diabetes.</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- HEALTH METRICS -->
+      <div class="section health-metrics">
+        <h2 class="section-title">Health Metrics</h2>
+        <div class="form-row">
+          <!-- Total Cholesterol -->
+          <div class="form-group">
+            <label for="totChol">Total Cholesterol</label>
+            <small>Your total cholesterol level (mg/dL).</small>
+            <input type="number" id="totChol" name="totChol" required>
+          </div>
+          <!-- Systolic Blood Pressure -->
+          <div class="form-group">
+            <label for="sysBP">Systolic Blood Pressure</label>
+            <small>Your systolic blood pressure reading (mmHg).</small>
+            <input type="number" id="sysBP" name="sysBP" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <!-- Diastolic Blood Pressure -->
+          <div class="form-group">
+            <label for="diaBP">Diastolic Blood Pressure</label>
+            <small>Your diastolic blood pressure reading (mmHg).</small>
+            <input type="number" id="diaBP" name="diaBP" required>
+          </div>
+          <!-- BMI -->
+          <div class="form-group">
+            <label for="BMI">BMI</label>
+            <small>Your Body Mass Index. Enter one decimal place if available.</small>
+            <input type="number" id="BMI" name="BMI" step="0.1" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <!-- Heart Rate -->
+          <div class="form-group">
+            <label for="heartRate">Heart Rate</label>
+            <small>Your resting heart rate in beats per minute (bpm).</small>
+            <input type="number" id="heartRate" name="heartRate" required>
+          </div>
+          <!-- Glucose -->
+          <div class="form-group">
+            <label for="glucose">Glucose</label>
+            <small>Your blood glucose level (mg/dL).</small>
+            <input type="number" id="glucose" name="glucose" required>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit">Submit</button>
     </form>
+  </div>
 
-    <div id="responseDiv"></div>
+  <script>
+    // Handle form submission
+    document.getElementById('myForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const data = {};
 
+      // Gather and parse data
+      for (let [key, value] of formData.entries()) {
+        const input = this.elements[key];
+        if (input.type === 'checkbox') {
+          data[key] = input.checked;
+        } else if (input.type === 'number') {
+          data[key] = Number(value);
+        } else {
+          data[key] = value;
+        }
+      }
 
-        <script src="{{ url_for('static', filename='index.js') }}"></script>
+      console.log('Form Data:', data);
+      alert('Form submitted! Check the console for details.');
+    });
 
-    </div>
+    // Toggle "Cigarettes Per Day" based on "Current Smoker" checkbox
+    const smokerCheckbox = document.querySelector('[name="currentSmoker"]');
+    const cigsPerDayGroup = document.getElementById('cigsPerDayGroup');
+
+    function toggleCigsPerDay() {
+      cigsPerDayGroup.style.display = smokerCheckbox.checked ? 'block' : 'none';
+    }
+    toggleCigsPerDay();
+    smokerCheckbox.addEventListener('change', toggleCigsPerDay);
+  </script>
 </body>
 </html>
