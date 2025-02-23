@@ -1,38 +1,42 @@
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelector("form").addEventListener("submit", function (event) {
-        event.preventDefault();
+document.getElementById("myForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent default form submission
 
-        const formData = {
-            age: document.getElementById("age").value,
-            gender: document.getElementById("gender").value,
-            bloodPressure: document.getElementById("blood-pressure").value,
-            heartRate: document.getElementById("heart-rate").value
-        };
+    // Collect form data
+    const formData = {
+        male: document.getElementById("male").checked,
+        age: parseInt(document.getElementById("age").value),
+        education: parseInt(document.getElementById("education").value),
+        currentSmoker: document.getElementById("currentSmoker").checked,
+        cigsPerDay: parseInt(document.getElementById("cigsPerDay").value) || 0,
+        BPMeds: document.getElementById("BPMeds").checked,
+        prevalentStroke: document.getElementById("prevalentStroke").checked,
+        prevalentHyp: document.getElementById("prevalentHyp").checked,
+        diabetes: document.getElementById("diabetes").checked,
+        totChol: parseInt(document.getElementById("totChol").value),
+        sysBP: parseFloat(document.getElementById("sysBP").value),
+        diaBP: parseFloat(document.getElementById("diaBP").value),
+        BMI: parseFloat(document.getElementById("BMI").value),
+        heartRate: parseInt(document.getElementById("heartRate").value),
+        glucose: parseInt(document.getElementById("glucose").value)
+    };
 
-        fetch("http://127.0.0.1:5000/submit", {  // Ensure this URL matches your Flask route
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Success:", data);
+    // Send data to backend
+    fetch("http://127.0.0.1:5000/submit", { // Replace with your backend URL
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Success:", data);
 
-                // Create a new div element
-                const responseDiv = document.createElement("div");
-                responseDiv.id = "responseDiv";
-                responseDiv.innerHTML = `${data.data}`;
-
-                // Append the new div to the body (or a specific container)
-                document.body.appendChild(responseDiv);
-
-
-            })
-            .catch(error => {
-                alert("Error submitting form");
-                console.error("Error:", error);
-            });
+        // Update or create response div
+        let responseDiv = document.getElementById("responseDiv");
+        responseDiv.innerHTML = `<p><strong>Server Response:</strong> ${data.message}</p>`;
+    })
+    .catch(error => {
+        console.error("Error:", error);
     });
 });
