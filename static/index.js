@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("form").addEventListener("submit", function (event) {
         event.preventDefault();
-        
+
         const formData = {
             age: document.getElementById("age").value,
             gender: document.getElementById("gender").value,
@@ -16,14 +16,23 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             body: JSON.stringify(formData)
         })
-        .then(response => response.json())
-        .then(data => {
-            alert("Form submitted successfully!");
-            console.log("Success:", data);
-        })
-        .catch(error => {
-            alert("Error submitting form");
-            console.error("Error:", error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                console.log("Success:", data);
+
+                // Create a new div element
+                const responseDiv = document.createElement("div");
+                responseDiv.id = "responseDiv";
+                responseDiv.innerHTML = `${data.data}`;
+
+                // Append the new div to the body (or a specific container)
+                document.body.appendChild(responseDiv);
+
+
+            })
+            .catch(error => {
+                alert("Error submitting form");
+                console.error("Error:", error);
+            });
     });
 });
